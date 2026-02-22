@@ -462,8 +462,8 @@ async function handleSubmit() {
     document.getElementById('loadingView').style.display = 'none';
 
     if (data.success) {
-      // Decode names
-      const myName = decodeName(data.name);
+      // השם שלי חוזר גלוי, רק הענק מוצפן
+      const myName = data.name;
       const giantName = decodeName(data.giant);
 
       document.getElementById('resultName').textContent = myName;
