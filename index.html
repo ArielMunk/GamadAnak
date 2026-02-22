@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>גמד וענק 🎭</title>
+  <link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Frank+Ruhl+Libre:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d1a;
+      --card: #161628;
+      --border: #2a2a4a;
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --red: #8b2635;
+      --red-light: #c94055;
+      --text: #e8e0d0;
+      --muted: #7a7090;
+      --glow: rgba(201,168,76,0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Alef', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Atmospheric background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(139,38,53,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 80% at 50% 50%, rgba(22,22,40,0.9) 0%, var(--bg) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Stars */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: twinkle var(--d, 3s) var(--delay, 0s) infinite alternate ease-in-out;
+      opacity: var(--o, 0.4);
+    }
+    @keyframes twinkle {
+      from { opacity: 0.1; transform: scale(0.8); }
+      to { opacity: var(--o, 0.7); transform: scale(1.2); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    .crown {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 0 20px rgba(201,168,76,0.6));
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    h1 {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,0.05),
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .card-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .input-wrap {
+      position: relative;
+      margin-bottom: 1.2rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      color: var(--text);
+      font-family: 'Alef', sans-serif;
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 0.15em;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.04);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.1), 0 0 20px rgba(201,168,76,0.05);
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold) 0%, #a07830 100%);
+      color: #1a1200;
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn:hover::before { left: 100%; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,0.3); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* Loading */
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .spinner {
+      display: inline-block;
+      width: 28px; height: 28px;
+      border: 2px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 0.8rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Result */
+    .result {
+      display: none;
+      text-align: center;
+      animation: revealResult 0.8s ease both;
+    }
+
+    @keyframes revealResult {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .result-greeting {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .result-name {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 30px rgba(201,168,76,0.4);
+    }
+
+    .role-box {
+      background: linear-gradient(135deg, rgba(139,38,53,0.2), rgba(139,38,53,0.08));
+      border: 1px solid rgba(139,38,53,0.4);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .role-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
+    }
+
+    .role-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .role-emoji { font-size: 2.2rem; margin-bottom: 0.4rem; display: block; }
+
+    .role-title {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .role-of {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .role-target {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .secret-warning {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    /* Error */
+    .error-msg {
+      display: none;
+      background: rgba(139,38,53,0.15);
+      border: 1px solid rgba(139,38,53,0.4);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.9rem;
+      color: #e07080;
+      text-align: center;
+      margin-top: 1rem;
+      animation: shake 0.4s ease;
+    }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-8px)}
+      75%{transform:translateX(8px)}
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reset-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      margin-top: 1.2rem;
+      text-decoration: underline;
+      font-family: 'Alef', sans-serif;
+    }
+    .reset-btn:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+  <div class="header">
+    <span class="crown">👑</span>
+    <h1>גמד וענק</h1>
+    <p class="subtitle">המשחק הסודי שלנו</p>
+  </div>
+
+  <div class="card">
+    <!-- FORM -->
+    <div id="formView">
+      <span class="card-label">הכנס את הקוד האישי שלך</span>
+      <div class="input-wrap">
+        <input type="text" id="codeInput" placeholder="קוד סודי..." autocomplete="off" autocorrect="off" />
+      </div>
+      <button class="btn" id="submitBtn" onclick="handleSubmit()">גלה את התפקיד שלי 🎭</button>
+      <div class="error-msg" id="errorMsg">הקוד לא נמצא. נסה שוב!</div>
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading" id="loadingView">
+      <div class="spinner"></div>
+      <p>מחפש את הגורל שלך...</p>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result" id="resultView">
+      <p class="result-greeting">שלום,</p>
+      <p class="result-name" id="resultName"></p>
+
+      <div class="role-box">
+        <div class="role-label">אתה</div>
+        <span class="role-emoji">🧝</span>
+        <div class="role-title">הגמד</div>
+        <div class="role-of">של</div>
+        <div class="role-target" id="resultGiant"></div>
+      </div>
+
+      <div class="secret-warning">
+        🤫 <span>שמור את זה בסוד! אל תספר לאף אחד מי הגמד שלך.</span>
+      </div>
+
+      <button class="reset-btn" onclick="resetForm()">← חזרה</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// ⚙️ הגדרות - שנה כאן בלבד!
+// ============================================================
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxz79WAa99hqJrZmitamgDiZiYizVS5r9QbXbBRH5tKk03NaLl64zVE6hoPO8u4dpVo/exec";
+// ============================================================
+
+function generateStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      --d: ${2 + Math.random() * 4}s;
+      --delay: ${Math.random() * 3}s;
+      --o: ${0.2 + Math.random() * 0.6};
+      width: ${1 + Math.random() * 2}px;
+      height: ${1 + Math.random() * 2}px;
+    `;
+    container.appendChild(star);
+  }
+}
+generateStars();
+
+// פענוח הצפנת HTML בסיסית
+function decodeHtmlEntities(str) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = str;
+  return txt.value;
+}
+
+// Simple base64 decode + HTML entity decode
+function decodeName(encoded) {
+  try {
+    // First: HTML entity decode
+    let decoded = decodeHtmlEntities(encoded);
+    // Then: base64 decode
+    decoded = atob(decoded);
+    // Finally: URI decode for Hebrew
+    return decodeURIComponent(escape(decoded));
+  } catch(e) {
+    return decodeHtmlEntities(encoded);
+  }
+}
+
+async function handleSubmit() {
+  const code = document.getElementById('codeInput').value.trim();
+  if (!code) return;
+
+  const btn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+
+  btn.disabled = true;
+  errorMsg.style.display = 'none';
+
+  document.getElementById('formView').style.display = 'none';
+  document.getElementById('loadingView').style.display = 'block';
+
+  try {
+    const url = `${SCRIPT_URL}?code=${encodeURIComponent(code)}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    document.getElementById('loadingView').style.display = 'none';
+
+    if (data.success) {
+      // Decode names
+      const myName = decodeName(data.name);
+      const giantName = decodeName(data.giant);
+
+      document.getElementById('resultName').textContent = myName;
+      document.getElementById('resultGiant').textContent = giantName;
+      document.getElementById('resultView').style.display = 'block';
+    } else {
+      document.getElementById('formView').style.display = 'block';
+      errorMsg.style.display = 'block';
+      btn.disabled = false;
+    }
+  } catch(err) {
+    document.getElementById('loadingView').style.display = 'none';
+    document.getElementById('formView').style.display = 'block';
+    errorMsg.textContent = 'שגיאת חיבור. נסה שוב.';
+    errorMsg.style.display = 'block';
+    btn.disabled = false;
+  }
+}
+
+function resetForm() {
+  document.getElementById('resultView').style.display = 'none';
+  document.getElementById('formView').style.display = 'block';
+  document.getElementById('codeInput').value = '';
+  document.getElementById('submitBtn').disabled = false;
+}
+
+document.getElementById('codeInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleSubmit();
+});
+</script>
+</body>
+</html>
